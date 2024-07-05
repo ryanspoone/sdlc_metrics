@@ -1,0 +1,32 @@
+{
+    "name": "sldc-metrics",
+    "description": "SLDC Metrics",
+    "version": "0.0.1",
+    "scripts": {
+        "lint": "eslint .",
+        "format": "eslint . --fix"
+    },
+    "author": "Ryan Spoone",
+    "license": "UNLICENSED",
+    "dependencies": {
+        "await-the": "^4.1.0",
+        "lodash": "^4.17.15",
+        "markdownlint-cli": "^0.34.0",
+        "moment": "^2.24.0"
+    },
+    "devDependencies": {
+        "eslint": "^8.41.0",
+        "eslint-config-airbnb": "^19.0.4",
+        "eslint-config-prettier": "^6.7.0",
+        "eslint-plugin-import": "^2.27.5",
+        "eslint-plugin-json": "^2.1.2",
+        "eslint-plugin-jsx-a11y": "^6.7.1",
+        "eslint-plugin-mocha": "^5.3.0",
+        "eslint-plugin-prettier": "^3.1.1",
+        "eslint-plugin-react": "^7.32.2",
+        "eslint-plugin-react-hooks": "^4.6.0",
+        "faker": "^4.1.0",
+        "prettier": "^1.19.1",
+        "prettier-eslint-cli": "^5.0.0"
+    }
+}

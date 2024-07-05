@@ -1,0 +1,16 @@
+requests==2.26.0
+python-dotenv==0.19.1
+numpy==1.25.1
+pandas==2.0.3
+python-dateutil==2.8.2
+argparse==1.4.0
+gspread==5.9.0
+oauth2client==4.1.3
+google-api-python-client==2.88.0
+google-auth==2.19.1
+google-auth-oauthlib==1.0.0
+google-auth-httplib2==0.1.0
+slack_sdk==3.21.3
+PyGithub==1.58.2
+cachetools==5.3.0
+gspread_dataframe==3.3.1

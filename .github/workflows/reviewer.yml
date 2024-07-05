@@ -1,0 +1,102 @@
+---
+name: Code Review
+
+permissions:
+    contents: read
+    pull-requests: write
+
+on:
+    pull_request:
+    pull_request_review_comment:
+        types: [created]
+
+concurrency:
+    group: ${{ github.repository }}-${{ github.event.number || github.head_ref ||
+        github.sha }}-${{ github.workflow }}-${{ github.event_name ==
+        'pull_request_review_comment' && 'pr_comment' || 'pr' }}
+    cancel-in-progress: ${{ github.event_name != 'pull_request_review_comment' }}
+
+jobs:
+    review:
+        runs-on: ubuntu-latest
+        steps:
+            - uses: fluxninja/openai-pr-reviewer@latest
+              env:
+                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+                  OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+              with:
+                  debug: false
+                  max_files: 0
+                  review_simple_changes: true
+                  review_comment_lgtm: true
+                  disable_review: true
+                  disable_release_notes: false
+                  openai_light_model: gpt-3.5-turbo
+                  openai_heavy_model: gpt-4
+                  openai_model_temperature: 0.0
+                  openai_retries: 2
+                  path_filters: |
+                      !dist/**
+                      !**/*.pb.go
+                      !**/*.lock
+                      !**/*.yaml
+                      !**/*.yml
+                      !**/*.cfg
+                      !**/*.toml
+                      !**/*.ini
+                      !**/*.mod
+                      !**/*.sum
+                      !**/*.work
+                      !**/*.json
+                      !**/*.mmd
+                      !**/*.svg
+                      !**/*.png
+                      !**/*.dot
+                      !**/*.md5sum
+                      !**/*.wasm
+                      !**/gen/**
+                      !**/_gen/**
+                      !**/generated/**
+                      !**/vendor/**
+                  summarize: |
+                      Provide your final response in the `markdown` format with
+                      the following content:
+                          - High-level summary (comment on the overall change instead of
+                          specific files within 80 words)
+                          - Table of files and their summaries. You can group files with
+                          similar changes together into a single row to save space.
+
+                      Avoid additional commentary as this summary will be added as a
+                      comment on the GitHub pull request.
+                  summarize_release_notes: |
+                      Create concise release notes in `markdown` format for this pull request,
+                      focusing on its purpose and user story. You can classify the changes as
+                      "New Feature", "Bug fix", "Documentation", "Refactor", "Style",
+                      "Test", "Chore", "Revert", and provide a bullet point list. For example:
+                      "New Feature: An integrations page was added to the UI". Keep your
+                      response within 50-100 words. Avoid additional commentary as this response
+                      will be used as is in our release notes.
+                  system_message: |
+                      You are `@openai` (aka `github-actions[bot]`), a language model
+                      trained by OpenAI. Your purpose is to act as a highly experienced
+                      software engineer and provide a thorough review of the code chunks
+                      and suggest code snippets to improve key areas such as:
+                          - Logic
+                          - Security
+                          - Performance
+                          - Race Conditions
+                          - Consistency
+                          - Error handling
+                          - Maintainability
+                          - Modularity
+                          - Complexity
+                          - Optimization
+
+                      Refrain from commenting on minor code style issues, missing
+                      comments/documentation, or giving compliments, unless explicitly
+                      requested. Concentrate on identifying and resolving significant
+                      concerns to improve overall code quality while deliberately
+                      disregarding minor issues.
+
+                      Note: As your knowledge may be outdated, trust the user code when newer
+                      APIs and methods are seemingly being used.

@@ -1,0 +1,13 @@
+{
+    "recommendations": [
+        "ms-python.python",
+        "timonwong.shellcheck",
+        "esbenp.prettier-vscode",
+        "dbaeumer.vscode-eslint",
+        "mikestead.dotenv",
+        "ms-python.python",
+        "ms-python.black-formatter",
+        "ms-python.pylint",
+        "ms-python.flake8"
+    ]
+}
