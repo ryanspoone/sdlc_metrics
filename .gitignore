@@ -227,3 +227,5 @@ yarn-lock.json
 
 # Service Account
 google-credentials.json
+
+.DS_Store
